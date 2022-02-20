@@ -56,7 +56,8 @@
         <module>ts-user-service</module>
         <module>ts-delivery-service</module>
 
-        <module>ts-trainfood-service</module>
+        <module>ts-train-food-service</module>
+        <module>ts-gateway-service</module>
         <!--<module>ts-ticket-advance-service</module>-->
         <!--<module>1_services_analysis_mvn</module>-->
     </modules>

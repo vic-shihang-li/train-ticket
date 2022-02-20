@@ -1,0 +1,201 @@
+# HTTP Server
+server:
+  port: 18888  # HTTP (Tomcat) port
+
+spring:
+  application:
+    name: ts-gateway-service
+  data:
+    mongodb:
+      host: ts-gateway-mongo
+      #      username: user
+      #      password: ${MONGODB_PASSWORD}
+      database: ts
+      port: 27017
+  cloud:
+    gateway:
+      routes:
+        - id: admin-basic-info
+          uri: lb://xxxxxxxxxxx
+          predicates:
+            - Path=/api/v1/adminbasicservice/**
+
+        - id: admin-order
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/adminorderservice/**
+
+        - id: admin-route
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/adminrouteservice/**
+
+        - id: admin-travel
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/admintravelservice/**
+
+        - id: assurance
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/assuranceservice/**
+
+        - id: auth
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/auth/**
+
+        - id: auth-user
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/users/**
+
+        - id: avatar
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/avatar/**
+
+        - id: basic
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/basicservice/**
+
+        - id: cancel
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/cancelservice/**
+
+        - id: config
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/configservice/**
+
+        - id: consign-price
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/consignpriceservice/**
+
+        - id: consign
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/consignservice/**
+
+        - id: contacts
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/contactservice/**
+
+        - id: execute
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/executeservice/**
+
+        - id: food
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/foodservice/**
+
+        - id: inside-payment
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/inside_pay_service/**
+
+        - id: notification
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/notifyservice/**
+
+        - id: order-other
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/orderOtherService/**
+
+        - id: payment
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/paymentservice/**
+
+        - id: preserve-other
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/preserveotherservice/**
+
+        - id: preserve
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/preserveservice/**
+
+        - id: price
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/priceservice/**
+
+        - id: rebook
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/rebookservice/**
+
+        - id: route-plan
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/routeplanservice/**
+
+        - id: route
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/routeservice/**
+
+        - id: seat
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/seatservice/**
+
+        - id: security
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/securityservice/**
+
+        - id: station-food
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/stationfoodservice/**
+
+        - id: station
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/stationservice/**
+
+        - id: train-food
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/trainfoodservice/**
+
+        - id: train
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/trainservice/**
+
+        - id: travel2
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/travel2service/**
+
+        - id: travel-plan
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/travelplanservice/**
+
+        - id: travel
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/travelservice/**
+
+        - id: user
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/userservice/users/**
+
+        - id: verification-code
+            uri: lb://xxxxxxxxxxx
+            predicates:
+              - Path=/api/v1/verifycode/**

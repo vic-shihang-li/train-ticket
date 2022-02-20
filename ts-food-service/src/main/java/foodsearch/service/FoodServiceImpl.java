@@ -211,7 +211,7 @@ public class FoodServiceImpl implements FoodService {
         /**--------------------------------------------------------------------------------------*/
         HttpEntity requestEntityGetTrainFoodListResult = new HttpEntity(null);
         ResponseEntity<Response<List<TrainFood>>> reGetTrainFoodListResult = restTemplate.exchange(
-                "http://ts-trainfood-service:19999/api/v1/trainfoodservice/trainfoods/" + tripId,
+                "http://ts-train-food-service:19999/api/v1/trainfoodservice/trainfoods/" + tripId,
                 HttpMethod.GET,
                 requestEntityGetTrainFoodListResult,
                 new ParameterizedTypeReference<Response<List<TrainFood>>>() {
