@@ -13,189 +13,202 @@ spring:
       database: ts
       port: 27017
   cloud:
+    nacos:
+      discovery:
+        server-addr: 10.176.122.80
     gateway:
       routes:
         - id: admin-basic-info
-          uri: lb://xxxxxxxxxxx
+          uri: lb://ts-admin-basic-info-service
           predicates:
             - Path=/api/v1/adminbasicservice/**
 
         - id: admin-order
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-admin-order-service
             predicates:
               - Path=/api/v1/adminorderservice/**
 
         - id: admin-route
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-admin-route-service
             predicates:
               - Path=/api/v1/adminrouteservice/**
 
         - id: admin-travel
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-admin-travel-service
             predicates:
               - Path=/api/v1/admintravelservice/**
 
+        - id: admin-user
+            uri: lb://ts-admin-user-service
+            predicates:
+              - Path=/api/v1/adminuserservice/users/**
+
         - id: assurance
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-assurance-service
             predicates:
               - Path=/api/v1/assuranceservice/**
 
         - id: auth
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-auth-service
             predicates:
               - Path=/api/v1/auth/**
 
         - id: auth-user
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-auth-service
             predicates:
               - Path=/api/v1/users/**
 
         - id: avatar
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-avatar-service
             predicates:
               - Path=/api/v1/avatar/**
 
         - id: basic
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-basic-service
             predicates:
               - Path=/api/v1/basicservice/**
 
         - id: cancel
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-cancel-service
             predicates:
               - Path=/api/v1/cancelservice/**
 
         - id: config
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-config-service
             predicates:
               - Path=/api/v1/configservice/**
 
         - id: consign-price
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-consign-price-service
             predicates:
               - Path=/api/v1/consignpriceservice/**
 
         - id: consign
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-consign-service
             predicates:
               - Path=/api/v1/consignservice/**
 
         - id: contacts
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-contacts-service
             predicates:
               - Path=/api/v1/contactservice/**
 
         - id: execute
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-execute-service
             predicates:
               - Path=/api/v1/executeservice/**
 
         - id: food
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-food-service
             predicates:
               - Path=/api/v1/foodservice/**
 
         - id: inside-payment
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-inside-payment-service
             predicates:
               - Path=/api/v1/inside_pay_service/**
 
         - id: notification
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-notification-service
             predicates:
               - Path=/api/v1/notifyservice/**
 
         - id: order-other
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-order-other-service
             predicates:
               - Path=/api/v1/orderOtherService/**
 
+        - id: order
+            uri: lb://ts-order-service
+            predicates:
+              - Path=/api/v1/orderservice/**
+
         - id: payment
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-payment-service
             predicates:
               - Path=/api/v1/paymentservice/**
 
         - id: preserve-other
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-preserve-other-service
             predicates:
               - Path=/api/v1/preserveotherservice/**
 
         - id: preserve
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-preserve-service
             predicates:
               - Path=/api/v1/preserveservice/**
 
         - id: price
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-price-service
             predicates:
               - Path=/api/v1/priceservice/**
 
         - id: rebook
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-rebook-service
             predicates:
               - Path=/api/v1/rebookservice/**
 
         - id: route-plan
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-route-plan-service
             predicates:
               - Path=/api/v1/routeplanservice/**
 
         - id: route
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-route-service
             predicates:
               - Path=/api/v1/routeservice/**
 
         - id: seat
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-seat-service
             predicates:
               - Path=/api/v1/seatservice/**
 
         - id: security
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-security-service
             predicates:
               - Path=/api/v1/securityservice/**
 
         - id: station-food
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-station-food-service
             predicates:
               - Path=/api/v1/stationfoodservice/**
 
         - id: station
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-station-service
             predicates:
               - Path=/api/v1/stationservice/**
 
         - id: train-food
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-train-food-service
             predicates:
               - Path=/api/v1/trainfoodservice/**
 
         - id: train
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-train-service
             predicates:
               - Path=/api/v1/trainservice/**
 
         - id: travel2
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-travel2-service
             predicates:
               - Path=/api/v1/travel2service/**
 
         - id: travel-plan
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-travel-plan-service
             predicates:
               - Path=/api/v1/travelplanservice/**
 
         - id: travel
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-travel-service
             predicates:
               - Path=/api/v1/travelservice/**
 
         - id: user
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-user-service
             predicates:
               - Path=/api/v1/userservice/users/**
 
         - id: verification-code
-            uri: lb://xxxxxxxxxxx
+            uri: lb://ts-verification-code-service
             predicates:
               - Path=/api/v1/verifycode/**
