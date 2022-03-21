@@ -5,6 +5,7 @@ import execute.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,11 @@ public class ExecuteServiceImpl implements ExecuteService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecuteServiceImpl.class);
 
+    @Value("${order-service.url}")
+    String order_service_url;
+    @Value("${order-other-service.url}")
+    String order_other_service_url;
+
     @Override
     public Response ticketExecute(String orderId, HttpHeaders headers) {
         //1.Get order information
@@ -34,10 +40,10 @@ public class ExecuteServiceImpl implements ExecuteService {
         Response<Order> resultFromOrder = getOrderByIdFromOrder(orderId, headers);
         Order order;
         if (resultFromOrder.getStatus() == 1) {
-            order =   resultFromOrder.getData();
+            order =  resultFromOrder.getData();
             //2.Check if the order can come in
             if (order.getStatus() != OrderStatus.COLLECTED.getCode()) {
-                LOGGER.error("ticket execute error: {}, orderId: {}", orderStatusWrong, orderId);
+                LOGGER.error("[ticketExecute][getOrderByIdFromOrder][ticket execute error: {}][orderId: {}]", orderStatusWrong, orderId);
                 return new Response<>(0, orderStatusWrong, null);
             }
             //3.Confirm inbound, request change order information
@@ -46,7 +52,7 @@ public class ExecuteServiceImpl implements ExecuteService {
             if (resultExecute.getStatus() == 1) {
                 return new Response<>(1, "Success.", null);
             } else {
-                LOGGER.error("executeOrder error: {}, orderId: {}", resultExecute.getMsg(), orderId);
+                LOGGER.error("[ticketExecute][executeOrder][executeOrder error: {}][orderId: {}]", resultExecute.getMsg(), orderId);
                 return new Response<>(0, resultExecute.getMsg(), null);
             }
         } else {
@@ -55,7 +61,7 @@ public class ExecuteServiceImpl implements ExecuteService {
                 order =   resultFromOrder.getData();
                 //2.Check if the order can come in
                 if (order.getStatus() != OrderStatus.COLLECTED.getCode()) {
-                    LOGGER.error("ticket execute error: {}, orderId: {}", orderStatusWrong, orderId);
+                    LOGGER.error("[ticketExecute][getOrderByIdFromOrderOther][ticket execute error: {}][orderId: {}]", orderStatusWrong, orderId);
                     return new Response<>(0, orderStatusWrong, null);
                 }
                 //3.Confirm inbound, request change order information
@@ -64,11 +70,11 @@ public class ExecuteServiceImpl implements ExecuteService {
                 if (resultExecute.getStatus() == 1) {
                     return new Response<>(1, "Success", null);
                 } else {
-                    LOGGER.error("executeOrderOther error: {}, orderId: {}", resultExecute.getMsg(), orderId);
+                    LOGGER.error("[ticketExecute][executeOrderOther][executeOrderOther error: {}][orderId: {}]", resultExecute.getMsg(), orderId);
                     return new Response<>(0, resultExecute.getMsg(), null);
                 }
             } else {
-                LOGGER.error("ticker execute error: {}, , orderId: {}", "Order Not Found", orderId);
+                LOGGER.error("[ticketExecute][getOrderByIdFromOrderOther][ticker execute error: {}][orderId: {}]", "Order Not Found", orderId);
                 return new Response<>(0, "Order Not Found", null);
             }
         }
@@ -85,7 +91,7 @@ public class ExecuteServiceImpl implements ExecuteService {
             order =  resultFromOrder.getData();
             //2.Check if the order can come in
             if (order.getStatus() != OrderStatus.PAID.getCode() && order.getStatus() != OrderStatus.CHANGE.getCode()) {
-                LOGGER.error("ticket collect error: {}, orderId: {}", orderStatusWrong, orderId);
+                LOGGER.error("[ticketCollect][getOrderByIdFromOrder][ticket collect error: {}][orderId: {}]", orderStatusWrong, orderId);
                 return new Response<>(0, orderStatusWrong, null);
             }
             //3.Confirm inbound, request change order information
@@ -94,7 +100,7 @@ public class ExecuteServiceImpl implements ExecuteService {
             if (resultExecute.getStatus() == 1) {
                 return new Response<>(1, "Success", null);
             } else {
-                LOGGER.error("ticket collect error: {}, orderId: {}", resultExecute.getMsg(), orderId);
+                LOGGER.error("[ticketCollect][executeOrder][ticket collect error: {}][orderId: {}]", resultExecute.getMsg(), orderId);
                 return new Response<>(0, resultExecute.getMsg(), null);
             }
         } else {
@@ -103,7 +109,7 @@ public class ExecuteServiceImpl implements ExecuteService {
                 order = (Order) resultFromOrder.getData();
                 //2.Check if the order can come in
                 if (order.getStatus() != OrderStatus.PAID.getCode() && order.getStatus() != OrderStatus.CHANGE.getCode()) {
-                    LOGGER.error("ticket collect error: {}, orderId: {}", orderStatusWrong, orderId);
+                    LOGGER.error("[ticketCollect][getOrderByIdFromOrderOther][ticket collect error: {}][orderId: {}]", orderStatusWrong, orderId);
                     return new Response<>(0, orderStatusWrong, null);
                 }
                 //3.Confirm inbound, request change order information
@@ -111,11 +117,11 @@ public class ExecuteServiceImpl implements ExecuteService {
                 if (resultExecute.getStatus() == 1) {
                     return new Response<>(1, "Success.", null);
                 } else {
-                    LOGGER.error("ticket collect error: {}, orderId: {}", resultExecute.getMsg(), orderId);
+                    LOGGER.error("[ticketCollect][executeOrderOther][ticket collect error: {}][orderId: {}]", resultExecute.getMsg(), orderId);
                     return new Response<>(0, resultExecute.getMsg(), null);
                 }
             } else {
-                LOGGER.error("ticket collect error: {}, orderId: {}", "Order Not Found", orderId);
+                LOGGER.error("[ticketCollect][getOrderByIdFromOrderOther][ticket collect error: {}][orderId: {}]", "Order Not Found", orderId);
                 return new Response<>(0, "Order Not Found", null);
             }
         }
@@ -127,7 +133,7 @@ public class ExecuteServiceImpl implements ExecuteService {
         headers = null;
         HttpEntity requestEntity = new HttpEntity(headers);
         ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/status/" + orderId + "/" + status,
+                order_service_url + "/api/v1/orderservice/order/status/" + orderId + "/" + status,
                 HttpMethod.GET,
                 requestEntity,
                 Response.class);
@@ -140,7 +146,7 @@ public class ExecuteServiceImpl implements ExecuteService {
         headers = null;
         HttpEntity requestEntity = new HttpEntity(headers);
         ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/status/" + orderId + "/" + status,
+                order_other_service_url + "/api/v1/orderOtherService/orderOther/status/" + orderId + "/" + status,
                 HttpMethod.GET,
                 requestEntity,
                 Response.class);
@@ -152,7 +158,7 @@ public class ExecuteServiceImpl implements ExecuteService {
         headers = null;
         HttpEntity requestEntity = new HttpEntity(headers);
         ResponseEntity<Response<Order>> re = restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + orderId,
+                order_service_url + "/api/v1/orderservice/order/" + orderId,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -161,11 +167,11 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     private Response<Order> getOrderByIdFromOrderOther(String orderId, HttpHeaders headers) {
-        ExecuteServiceImpl.LOGGER.info("[Execute Service][Get Order] Getting....");
+        ExecuteServiceImpl.LOGGER.info("[getOrderByIdFromOrderOther][Execute Service, Get Order]");
         headers = null;
         HttpEntity requestEntity = new HttpEntity(headers);
         ResponseEntity<Response<Order>> re = restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + orderId,
+                order_other_service_url + "/api/v1/orderOtherService/orderOther/" + orderId,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
