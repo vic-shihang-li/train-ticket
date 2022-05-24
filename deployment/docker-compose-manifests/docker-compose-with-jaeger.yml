@@ -510,7 +510,9 @@ services:
       - my-network
 
   jaeger:
-    image: jaegertracing/all-in-one:1.15
+    # image: jaegertracing/all-in-one:1.15
+    image: jaeger-otel-collector
+    # image: jaeger-rs
     ports:
       - 16686:16686
     deploy:
@@ -519,6 +521,10 @@ services:
         condition: on-failure
     networks:
       - my-network
+    volumes:
+      - type: bind
+        source: ~/tmp
+        target: /tmp
 
 
 networks:
